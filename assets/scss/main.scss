@@ -1,0 +1,39 @@
+@import "variables";
+@import "~materialize-css/sass/materialize";
+@import "components";
+
+h1, h2, h3, h4 {
+    color: $primary-color;
+}
+body {
+    background-color: $primary-background-color;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.btn, .btn:hover {
+    background-color: $primary-color;
+}
+
+div.block.contact.card > form div.row > .input-field > {
+    input {
+        &+ label.active {
+            color: $primary-color;
+        }
+        &:focus {
+            border-bottom: 1px solid $primary-color;
+            box-shadow: 0 1px 0 0 $primary-color;
+        }
+    }
+    textarea.materialize-textarea {
+        &+ label.active {
+            color: $primary-color;
+        }
+        &:focus {
+            border-bottom: 1px solid $primary-color;
+            box-shadow: 0 1px 0 0 $primary-color;
+        }
+    }
+}
+

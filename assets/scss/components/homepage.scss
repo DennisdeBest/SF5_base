@@ -1,0 +1,85 @@
+html>body {
+  &#app form {
+    input.invalid {
+      border-bottom: 1px solid $secondary-color;
+
+      ~ span.helper-text[data-error] {
+        color: $secondary-color;
+
+        ul li {
+          font-size: 0.9rem;
+        }
+      }
+
+      ~ label {
+        color: $secondary-color;
+      }
+    }
+
+  }
+}
+
+.container {
+  display: grid;
+  grid-column-gap: 20px;
+  grid-template-areas: "members text" "members message";
+}
+
+.logo {
+  width: 100%;
+  max-width: 1000px;
+}
+@include size(m){
+  .container {
+    display: grid;
+    grid-column-gap: 20px;
+    grid-template-areas: "text" "members" "message";
+  }
+}
+
+
+.block {
+  padding: 15px;
+  &.text {
+    grid-area: text;
+  }
+  &.members {
+    grid-area: members;
+  }
+  &.contact {
+    grid-area: message;
+  }
+}
+
+.foundation-item {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid $primary-color;
+  padding: 5px;
+  width: 100%;
+  height: 100%;
+  .title {
+    padding-left: 5px;
+  }
+  &:hover {
+    background-color: $primary-color;
+    .title {
+      color: $default-text-color;
+    }
+  }
+  a {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: $primary-color;
+  }
+}
+
+footer {
+  width: 100%;
+  .card {
+    margin-bottom: 0;
+    text-align: center;
+  }
+}

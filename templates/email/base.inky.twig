@@ -1,0 +1,12 @@
+{% apply inky_to_html|inline_css(encore_entry_css_source('email')) %}
+<container class="main-table">
+    {% block header %}
+        {% include 'email/header.inky.twig' %}
+    {% endblock %}
+    {% block message %}
+    {% endblock %}
+    {% block footer %}
+        {% include 'email/footer.inky.twig' %}
+    {% endblock %}
+</container>
+{% endapply %}

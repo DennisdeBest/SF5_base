@@ -1,0 +1,15 @@
+{% extends 'email/base.inky.twig' %}
+{% block message %}
+<row>
+    <h1>Nieuwe Donatie</h1>
+    {% if donation.name is not empty %}
+        <row>
+            <column><b>Van: </b></column>
+            <column>{{ donation.name }}</column>
+        </row>
+    {% endif %}
+    <row>
+        <column><b>{{ donation.amount }} €</b></column>
+    </row>
+</row>
+{% endblock %}

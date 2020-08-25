@@ -1,0 +1,13 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        foundation_logo:
+            uri_prefix: /uploads/logos
+            upload_destination: '%kernel.project_dir%/public/uploads/logos'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+
+        board_member:
+            uri_prefix: /uploads/board_members
+            upload_destination: '%kernel.project_dir%/public/uploads/board_members'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

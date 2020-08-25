@@ -1,0 +1,11 @@
+form:
+  contact:
+    name: 'Name'
+    email: 'Email'
+    url: 'Website'
+    message: 'Message'
+    save: 'Send'
+    sent: 'Sent'
+    error: 'Message not sent'
+  label:
+    delete: 'Delete'

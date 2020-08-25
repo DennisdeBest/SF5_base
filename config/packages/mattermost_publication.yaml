@@ -1,0 +1,4 @@
+mattermost_publication:
+  webhook_url: '%env(MATTERMOST_WEBHOOK_URL)%'
+  username: 'InternationalNepalAlliance'
+  channel: 'internationalnepalalliance'

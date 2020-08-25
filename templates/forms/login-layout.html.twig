@@ -1,0 +1,32 @@
+{% use 'forms/materialize-layout.html.twig' %}
+
+{% block form_row -%}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
+        {{- form_label(form) -}}
+        <div class="form-widget
+            {%- if attr.icon is defined %} form-widget-with-icon {% endif -%}
+        ">
+            {%- if attr.icon is defined -%}<i class="{{ attr.icon }}"></i>{%- endif -%}
+            {{- form_widget(form, {'attr': {'class': 'form-control'}}) -}}
+        </div>
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock form_row %}
+
+{% block form_widget %}
+    {{- parent() -}}
+{% endblock form_widget %}
+
+{% block form_widget_simple %}
+    {{- parent() -}}
+    {% if tooltip is defined %}
+        <span class="material-icons dp48 tooltipped"
+              data-position="bottom" data-delay="50" data-tooltip="{{ tooltip }}">error
+        </span>
+    {% endif %}
+{% endblock form_widget_simple %}
+
+{% block form_label -%}
+    {%- set label_attr = label_attr|merge({class: (label_attr.class|default('form-control-label sr-only'))|trim}) -%}
+    {{- parent() -}}
+{%- endblock form_label %}

@@ -1,0 +1,14 @@
+easy_admin:
+  entities:
+    Foundation:
+      class: App\Entity\Foundation
+      form:
+        fields:
+          - 'name'
+          - 'url'
+          - { property: 'imageFile', type: 'vich_image' }
+      list:
+        fields:
+          - 'name'
+          - 'url'
+          - { property: 'image', type: 'image', base_path: 'uploads/logos' }

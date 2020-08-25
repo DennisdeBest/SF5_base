@@ -1,0 +1,12 @@
+{% extends ('forms/login-base.html.twig') %}
+{% form_theme resetForm 'forms/login-layout.html.twig' %}
+{% block title %}Reset your password{% endblock %}
+{% block header_logo %}
+Reset Password
+{% endblock %}
+{% block form_content %}
+    {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword, {'attr': {'placeholder': 'email', 'icon': 'fa fa-fw fa-user'}}) }}
+        <button class="btn btn-primary">Reset password</button>
+    {{ form_end(resetForm) }}
+{% endblock %}

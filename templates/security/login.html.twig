@@ -1,0 +1,41 @@
+{% extends ('forms/login-base.html.twig') %}
+
+{% block header_logo %}
+    <a class="logo {{ easyadmin_config('site_name')|length > 14 ? 'logo-long' }}" title="{{ easyadmin_config('site_name')|striptags }}" href="{{ path('easyadmin') }}">
+        {{ easyadmin_config('site_name')|raw }}
+    </a>
+{% endblock header_logo %}
+
+{% block form_content %}
+    {% if csrf_token_intention|default(false) %}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token(csrf_token_intention) }}">
+    {% endif %}
+
+    <input type="hidden" name="{{ target_path_parameter|default('_target_path') }}" value="{{ target_path|default(path('easyadmin')) }}" />
+
+    <div class="form-group field-text">
+        <label for="email" class="sr-only form-control-label required">{{ _email_label }}</label>
+        <div class="form-widget form-widget-with-icon">
+            <i class="fa fa-fw fa-user"></i>
+            <input type="text" id="email" name="{{ email_parameter|default('email') }}" class="form-control" placeholder="{{ _email_label }}" value="{{ last_email|default('') }}" required autofocus>
+        </div>
+    </div>
+
+    <div class="form-group field-password">
+        <label for="password" class="sr-only form-control-label required">{{ _password_label }}</label>
+        <div class="form-widget form-widget-with-icon">
+            <i class="fa fa-fw fa-lock"></i>
+            <input type="password" id="password" name="{{ password_parameter|default('password') }}" class="form-control" placeholder="{{ _password_label }}" required>
+        </div>
+    </div>
+
+    <div class="form-group field-button">
+        <button type="submit" class="btn btn-primary btn-lg btn-block" onclick="this.form.submit(); this.disabled=true;">{{ _sign_in_label }}</button>
+    </div>
+
+    <div class="form-group field-button">
+        <input type="checkbox" name="_remember_me">Remember me
+    </div>
+
+    <a href="{{ forgotten_password }}">Forgot your password ?</a>
+{% endblock %}

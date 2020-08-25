@@ -1,0 +1,4 @@
+easy_admin:
+  entities:
+    Message:
+      class: App\Entity\Message

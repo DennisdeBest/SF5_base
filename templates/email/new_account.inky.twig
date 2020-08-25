@@ -1,0 +1,10 @@
+{% extends 'email/base.inky.twig' %}
+{% block message %}
+<row>
+    <h1>New account created</h1>
+    <row>
+        <column><b>Password : </b></column>
+        <column>{{ password }}</column>
+    </row>
+</row>
+{% endblock %}

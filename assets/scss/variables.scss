@@ -1,0 +1,34 @@
+@import "~materialize-css/sass/components/_color-variables.scss";
+
+$primary-color: #a9a819;
+$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color-dark: darken($primary-color, 15%) !default;
+
+$secondary-color: #c20016;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+$info-color: color("blue", "base") !default;
+$link-color: color("light-blue", "darken-1") !default;
+
+$third-color: #008dd1;
+
+$primary-background-color: #F7F9FB;
+$primary-background-color-light: lighten($primary-background-color, 15%);
+$primary-background-color-dark: darken($primary-background-color, 15%);
+
+$default-text-color: rgba(0, 0, 0, 0.87);
+$inactive-text-color: rgba(0,0,0, 0.54);
+
+@mixin size($size) {
+  @if $size == l {
+    @media (max-width: 1600px) { @content; }
+  }
+  @else if $size == m {
+    @media (max-width: 992px) { @content; }
+  }
+  @else if $size == s {
+    @media (max-width: 600px)  { @content; }
+  }
+}
+
+

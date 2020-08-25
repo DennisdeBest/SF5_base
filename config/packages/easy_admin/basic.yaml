@@ -1,0 +1,8 @@
+easy_admin:
+  site_name: '<a href="/" target="_blank">International Nepal Alliance <i class="fa fa-fw fa-mountain"></i></a>'
+  design:
+    brand_color: '#a9a819'
+  list:
+    actions:
+      - edit
+      - delete

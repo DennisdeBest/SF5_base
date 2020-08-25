@@ -1,0 +1,69 @@
+version:  '3.7'
+
+services:
+  nginx:
+    image: codebuds/nginx:dev-latest
+    restart: on-failure
+    working_dir: /var/www/symfony
+    volumes:
+      - ./public:/var/www/symfony/public:cached
+    networks:
+      - web
+      - internal
+    depends_on:
+      - php
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${SITE_LABEL}.rule=Host(`${SITE_URL}`)"
+  php:
+    image: codebuds/php:dev-1.0.3
+    restart: on-failure
+    user: exploit
+    environment:
+      - DATABASE_URL=mysql://exploit:exploit@maria/sf5
+      - PHP_IDE_CONFIG=serverName=Xdebug
+      - XDEBUG_CONFIG=remote_host=192.168.1.33 remote_port=9001 remote_enable=1 remote_connect_back=0 remote_handler=dbgp
+    networks:
+      - internal
+      - maria
+    external_links:
+      - maria:maria
+    volumes:
+      - .:/var/www/symfony:cached
+    command: >
+      sh -c "cd /var/www/symfony
+      && composer install
+      && php bin/console doctrine:database:create -n --if-not-exists
+      && php bin/console doctrine:migrations:migrate -n --allow-no-migration
+      && php bin/console cache:clear
+      && php bin/console cache:warmup
+      && php bin/console assets:install
+      && php-fpm"
+
+  node:
+    image: node:14-alpine
+    user: node
+    command: >
+      sh -c "cd /var/www/symfony
+      && yarn
+      && yarn encore dev --watch"
+    restart: on-failure
+    volumes:
+      - ./public:/var/www/symfony/public:cached
+      - ./assets:/var/www/symfony/assets:cached
+      - ./templates:/var/www/symfony/templates:cached
+      - ./yarn.lock:/var/www/symfony/yarn.lock
+      - ./yarn-error.log:/var/www/symfony/yarn-error.log
+      - ./package.json:/var/www/symfony/package.json
+      - ./.npmrc:/var/www/symfony/.npmrc
+      - ./node_modules:/var/www/symfony/node_modules:cached
+      - ./webpack.config.js:/var/www/symfony/webpack.config.js
+    working_dir: /var/www/symfony
+
+networks:
+  maria:
+    external: true
+  web:
+    external: true
+  internal:
+

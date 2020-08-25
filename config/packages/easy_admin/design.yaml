@@ -1,0 +1,8 @@
+easy_admin:
+    design:
+        menu:
+            - { label: 'Administration' }
+            - { entity: 'Message', icon: 'envelope',  default: true }
+            - { entity: 'User', icon: 'user'}
+            - { label: 'Content' }
+            - { entity: 'Foundation', icon: 'users'}

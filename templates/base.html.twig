@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="description"  content="Our mission is to improve the living conditions and future perspectives of children and other vulnerable members of society in Nepal, by improving their access to education, health care and economic independence.">
+
+    <title>{% block title %}International Nepal Alliance{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('build/app.css')}}">
+    {% endblock %}
+</head>
+<body id="app">
+{% block body %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}" defer="defer"></script>
+    {% for js in encore_entry_js_files('app') %}
+    <script src="{{ asset(js) }}" type="text/javascript" defer="defer"></script>
+    {% endfor %}
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}" defer="defer"></script>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+stages:
+  - build
+  - deploy
+
+build:
+  tags:
+    - docker
+  stage: build
+  image: codebuds/node:13-imagemin-0.0.3
+  cache:
+    key: "$CI_COMMIT_REF_SLUG-$CI_JOB_NAME"
+    paths:
+      - node_modules
+  artifacts:
+    paths:
+      - public/build
+  script:
+    - su-exec www-data yarn
+    - su-exec www-data yarn encore production
+  only:
+    refs:
+      - develop
+      - master
+    changes:
+      - assets/**/*
+      - yarn.lock
+
+deploy_staging:
+  tags:
+    - docker
+  stage: deploy
+  when: on_success
+  script:
+    - apk update && apk add openssh rsync git
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - printf "Host 147.135.130.2\n  StrictHostKeyChecking no\n" > ~/.ssh/config
+    - if [ -d public/build ]; then rsync --no-perms --no-owner --no-group --delete -rltvzOe 'ssh' public/build exploit@147.135.130.2:~/apps/staging.internationalnepalalliance.org/public/; fi
+    - ssh exploit@147.135.130.2 "cd ~/apps/staging.internationalnepalalliance.org &&
+      git pull origin develop &&
+      docker-compose -f docker-compose-prod.yaml restart"
+
+  environment:
+    name: staging
+    url: http://staging.internationalnepalalliance.org/
+  only:
+    - develop
+
+deploy_production:
+  tags:
+    - docker
+  stage: deploy
+  when: manual
+  script:
+    - apk update && apk add openssh rsync git
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - printf "Host 147.135.130.2\n  StrictHostKeyChecking no\n" > ~/.ssh/config
+    - if [ -d public/build ]; then rsync --no-perms --no-owner --no-group --delete -rltvzOe 'ssh' public/build exploit@147.135.130.2:~/apps/internationalnepalalliance.org/public/; fi
+    - ssh exploit@147.135.130.2 "cd ~/apps/internationalnepalalliance.org &&
+      git fetch &&
+      git checkout $CI_COMMIT_SHORT_SHA &&
+      docker-compose -f docker-compose-prod.yaml restart"
+
+  environment:
+    name: production
+    url: https://internationalnepalalliance.org/
+  only:
+    - master
